@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2g$qubqvwwxp2_#=ih$iaribsm)rho-ayd!&fv5l8epvkl1zo9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -90,10 +90,10 @@ DATABASES = {
 }
 
 
-# if DEBUG == False:
-#     DATABASES['default'] = dj_database_url.config(
-#         default='postgres://hqtrzegjmhvoki:2aefa59d884e6014a085f1b29d8781efc21051e1fc821d2df2ac33dee16aac77@ec2-54-235-156-60.compute-1.amazonaws.com:5432/d4rdqke1ko6aol'
-#     )
+if DEBUG == False:
+    DATABASES['default'] = dj_database_url.config(
+        default='postgres://hqtrzegjmhvoki:2aefa59d884e6014a085f1b29d8781efc21051e1fc821d2df2ac33dee16aac77@ec2-54-235-156-60.compute-1.amazonaws.com:5432/d4rdqke1ko6aol'
+    )
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
