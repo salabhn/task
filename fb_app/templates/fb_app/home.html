@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% load static %}
+
+    <title>Sample App Home</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="{% static "vendor/metisMenu/metisMenu.min.css" %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static "vendor/css/sb-admin-2.css" %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static "vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .cust-nav {
+            background-color: #11BBCF;
+            height: 90vh;
+        }
+        .sidebar ul li {
+            border-bottom: none;
+            padding: 0px;
+        }
+        .sidebar ul li a {
+            color: #FFFFFF;
+        }
+        .sidebar ul li a.active, .sidebar ul li a:hover {
+            background-color: #1E90FF;
+        }
+        .space-rt {
+            padding: 2px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">GROWTH PLUG </a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Hi {{user.get_full_name}}
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'logout' %}?next=/"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar cust-nav" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-home fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-link fa-fw"></i> Website</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-paw fa-fw"></i> Visitors</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-star fa-fw"></i> Reviews</a>
+                        </li>
+                        <li>
+                            <a href="#" class="active"><i class="fa fa-server fa-fw"></i> Listing</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-calendar fa-fw"></i> Appointments</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            {% if request.GET.st == '1' %}
+                <div class="row" style="padding-top: :5px">
+                    <div class="alert alert-success" id="success-alert">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <strong>Success! </strong>
+                            Page information successfully updated.
+                    </div>
+                </div>
+            {% elif request.GET.st == '2' %}
+                <div class="row" style="padding-top: :5px">
+                    <div class="alert alert-danger" id="success-alert">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <strong>Failed! </strong>
+                            Page information updation failed.{% if request.GET.em %} ({{request.GET.em}}) {% endif %}
+                    </div>
+                </div>
+            {% else %}
+            {{status}}
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 style='text-align:center'>Listings</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th class="text-center">Source</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Address</th>
+                                <th class="text-center">Phone</th>
+                                <th class="text-center">Rating</th>
+                                <th class="text-center">Listed</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><i class="space-rt fa fa-google-plus"></i> Google</td>
+                                <td>ABC Dental</td>
+                                <td>2101 California St</td>
+                                <td>111.111.1111</td>
+                                <td>3/5</td>
+                                <td>Yes</td>
+                                <td>&#10004;</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><i class="space-rt fa fa-yelp"></i> Yelp</td>
+                                <td>ABC Dental</td>
+                                <td>2101 California St</td>
+                                <td>111.111.1111</td>
+                                <td>2/5</td>
+                                <td>No</td>
+                                <td>&#10006;</td>
+                                <td>
+                                    <span>
+                                        <button class="btn btn-primary" data-toggle="modal"
+                                                                 data-target="#">
+                                            Update
+                                        </button>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><i class="space-rt fa fa-yahoo "></i> Yahoo</td>
+                                <td>ABC Dental</td>
+                                <td>2101 California St</td>
+                                <td>111.111.1111</td>
+                                <td>3/5</td>
+                                <td>No</td>
+                                <td>&#10006;</td>
+                                <td>
+                                    <span>
+                                        <button class="btn btn-primary" data-toggle="modal"
+                                                                 data-target="#">
+                                            Update
+                                        </button>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><i class="space-rt fa fa-foursquare "></i> Foursquare</td>
+                                <td>ABC Dental</td>
+                                <td>2101 California St</td>
+                                <td>111.111.1111</td>
+                                <td>2/5</td>
+                                <td>No</td>
+                                <td>&#10004;</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><i class="space-rt fa fa-facebook-f "></i> Facebook</td>
+                                {% if id %}
+                                    <td>{{name}}</td>
+                                    <td>{{single_line_address}}</td>
+                                    <td>{{phone}}</td>
+                                    <td>{% if overall_star_rating %} {{overall_star_rating}}/5 {% else %} {% endif %}</td>
+                                    <td>{% if listed %} Yes {% else %} No {% endif %}</td>
+                                    <td>{% if listed %} &#10004; {% else %} &#10006; {% endif %}</td>
+                                    <td>
+                                        {% if listed %}
+                                            <span  id="id_action">
+                                                <button class="btn btn-primary" data-toggle="modal"
+                                                                         data-target="#myModal">
+                                                    Update
+                                                </button>
+                                            </span>
+                                        {% else %}  
+                                        {% endif %}
+                                    </td>
+                                {% else %}
+                                    <td colspan="7" style="text-align: center"> Hi, You do not own any Facebook pages. <a href="https://www.facebook.com/pages/create" target="_blank">Click here</a> to create a new page.</td>
+                                {% endif %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Update Page Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="form-horizontal" role="form" id="id_page_info_form">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{id}}">
+                                <input type="hidden" name="access_token" value="{{access_token}}">
+                                <fieldset>
+
+                                    <!-- Form Name -->
+                                    <legend>Page Details</legend>
+
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="textinput">About</label>
+                                        <div class="col-sm-10">
+                                            <textarea placeholder="About Page" class="form-control" rows="5" name="about" id="id_about" required="required">{{about}}</textarea>
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="textinput">Phone</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" placeholder="Phone" class="form-control" name="phone" id="id_phone" required="required" value="{{phone}}">
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="textinput">Emails</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" placeholder="Emails" class="form-control" name="emails" id="id_emails" required="required" value="{{emails}}">
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="textinput">Street</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" placeholder="Street" class="form-control" name="street" id="id_street" required="required" value="{{location.street}}">
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="textinput">City</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" placeholder="City" class="form-control" name="city" id="id_city" required="required" value="{{location.city}}">
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    {% if located_in_us  %}
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="textinput">State</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" placeholder="State" class="form-control" name="state" id="id_state" required="required" value="{{location.state}}">
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="textinput">Country</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" placeholder="Country" class="form-control" name="country" id="id_country" required="required" value="{{location.country}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="textinput">Zip Code</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" placeholder="Zip Code" class="form-control" name="zip" id="id_zip" required="required" value="{{location.zip}}">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div><!-- /.col-lg-12 -->
+                    </div><!-- /.row -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="id_submit_btn">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- jQuery -->
+    <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="{% static "vendor/metisMenu/metisMenu.min.js" %}"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static "vendor/js/sb-admin-2.js" %}"></script>
+    <script src="{% static "vendor/js/jquery.validate.js" %}"></script>
+    <script>
+        $(document).ready(function (){
+
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+               $("#success-alert").slideUp(500);
+            });   
+
+            $("#id_page_info_form").submit(function(e) {
+                e.preventDefault();
+            }).validate({
+                rules: {
+                    about: {
+                        required: true,
+                        minlength: 5
+                    },
+                    phone: {
+                        required: true,
+                        minlength: 5
+                    },
+                    emails: {
+                        required: true,
+                        minlength: 5,
+                    },
+                    street: {
+                        required: true,
+                        minlength: 3
+                    },
+                    city: {
+                        required: true,
+                        minlength: 2
+                    },
+                    country: {
+                        required: true,
+                        minlength: 2
+                    },
+                    zip: {
+                        required: true,
+                        minlength: 4
+                    }
+                },
+                submitHandler: function(form) { 
+                    $.ajax({
+                        url: '/update-page-info', 
+                        type: 'POST',
+                        data: $('#id_page_info_form').serialize(),
+                        success: function(data){
+                            window.location = '/?st='+data['success']+'&em='+data['eum']
+                        }
+                    });
+                    return false;  //This doesn't prevent the form from submitting.
+                }
+            });
+             $("#id_submit_btn").on('click', function() {
+                $("#id_page_info_form").submit();
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>
